@@ -55,39 +55,47 @@ export class TensorPage {
         await this.noiseSlider.fill(String(percent));
     }
 
+    // Method to get the current noise level from the slider input.
+    async getNoiseLevel(): Promise<number> {
+        const value = await this.noiseSlider.inputValue();
+        return Number(value);
+    }
+
+    // Feature toggling methods
     featureToggle(name: FeatureName): Locator {
         return this.page.locator(`#canvas-${name}`);
     }
 
+    // Method to get the feature node by name, which is used to check the feature's state.
     private featureNode(name: FeatureName): Locator {
         return this.page.locator(`#node${name}`);
     }
 
-    /** Clicking flips the feature's state - it is a toggle, not a one-way select. */
+    // Method to toggle a feature on or off by clicking on its corresponding toggle button.
     async toggleFeature(name: FeatureName) {
         await this.featureToggle(name).click();
     }
 
+    // Method to check if a feature is currently active by examining its class attribute.
     async getFeatureState(name: FeatureName): Promise<boolean> {
         const classAttr = await this.featureNode(name).getAttribute('class');
         return (classAttr ?? '').split(/\s+/).includes('active');
     }
 
+    // Method to set the number of neurons by clicking the remove button.
     async setNeuronCount(layerIndex: number) {
         const layer = this.neuronControls.nth(layerIndex);
-        const currentCountText = await layer.locator('> div:last-child').textContent();
-        const currentCount = Number(currentCountText?.replace(/[^\d]/g, '') ?? '0'); // Remove me i am for debugging only
         await layer.getByRole('button', { name: 'remove' }).click();
-        //console.log(`Setting neuron count for layer ${layerIndex}: current=${currentCount}, target=${count}`);
     }
 
+    // Method to get the current epoch number by extracting the numeric part from the epoch label's text content.
     async getEpoch(): Promise<number> {
         const epochText = await this.epochLabel.textContent();
         //console.log('Raw epoch text:', JSON.stringify(epochText));
         return Number(epochText.replace(/[^\d]/g, '') ?? '0');
     }
 
-
+    // Method to get the current test loss value.
     async getTestLoss(): Promise<number> {
         return Number(await this.testLossValue.textContent());
     }
