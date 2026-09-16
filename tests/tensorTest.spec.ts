@@ -21,9 +21,37 @@ test.describe('TensorFlow Schneider run', () => {
     await tensorflow.setNoiseLevel(5);
     await expect(tensorflow.noiseSlider).toHaveValue('5');
 
+    
+    await tensorflow.toggleFeature('xSquared');
+    await tensorflow.toggleFeature('ySquared');
+    //expect(await tensorflow.getFeatureState('xSquared')).toBe(true);
+    //expect(await tensorflow.getFeatureState('ySquared')).toBe(true);
+    await expect.poll(() => tensorflow.getFeatureState('xSquared')).toBe(true);
+    await expect.poll(() => tensorflow.getFeatureState('ySquared')).toBe(true);
+
+    await tensorflow.setNeuronCount(0); // Set first layer to 3 neurons
+    expect(await tensorflow.neuronControls.nth(0).locator('> div:last-child').textContent()).toContain('3');
+    await tensorflow.setNeuronCount(1); // Set second layer to 1 neuron
+    expect(await tensorflow.neuronControls.nth(1).locator('> div:last-child').textContent()).toContain('1');
+
+
+
+    await tensorflow.startStopButton.click();
+    await expect(tensorflow.startStopButton).toHaveClass(/playing/);
+    //expect(await tensorflow.startStopButton.getAttribute('title')).toBe('Pause');
+    let epoch = await tensorflow.getEpoch();
+    while (epoch <= 300) {
+        await page.waitForTimeout(200); // Wait for 200 milliseconds before checking the epoch again
+        epoch = await tensorflow.getEpoch();
+    }
+    await tensorflow.startStopButton.click();
+    await expect(tensorflow.startStopButton).not.toHaveClass(/playing/);
+    console.log(`Current epoch after stop: ${epoch}`);
+
     // Final test loss after training with the configured settings.
     const finalTestLossvalue = await tensorflow.getTestLoss();
     console.log(`Final test loss after training: ${finalTestLossvalue}`);
 
   });
+
 });
