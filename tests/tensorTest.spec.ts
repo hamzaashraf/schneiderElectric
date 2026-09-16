@@ -32,15 +32,14 @@ test.describe('TensorFlow Schneider run', () => {
     await expect.poll(() => tensorflow.getFeatureState('ySquared')).toBe(true);
 
     // Set the number of neurons in the first and second layers and verify the counts.
-    await tensorflow.setNeuronCount(0); // Set first layer to 3 neurons
+    await tensorflow.setNeuronCount(0); // Set first index layer to 3 neurons
     expect(await tensorflow.neuronControls.nth(0).locator('> div:last-child').textContent()).toContain('3');
-    await tensorflow.setNeuronCount(1); // Set second layer to 1 neuron
+    await tensorflow.setNeuronCount(1); // Set second index layer to 1 neuron
     expect(await tensorflow.neuronControls.nth(1).locator('> div:last-child').textContent()).toContain('1');
 
     // Start the training process and wait until the epoch reaches 0.3, then stop the training.
     await tensorflow.startStopButton.click();
     await expect(tensorflow.startStopButton).toHaveClass(/playing/);
-    //expect(await tensorflow.startStopButton.getAttribute('title')).toBe('Pause');
     let epoch = await tensorflow.getEpoch();
     while (epoch <= 300) {
         await page.waitForTimeout(200); // Wait for 200 milliseconds before checking the epoch again
