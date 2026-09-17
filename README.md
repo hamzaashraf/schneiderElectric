@@ -3,13 +3,15 @@ Automated Playwright tests for TensorFlow Playground (https://playground.tensorf
 
 ## Prerequisites
 
-- [Node.js] (https://nodejs.org/) (LTS version)
-- npm (comes with Node.js)
+- [Node.js] (https://nodejs.org/). (LTS version)
+- npm (comes with Node.js).
+- I used Visual Studio (VS Code) for this assignment.
 
 If this is your first time setting up Playwright, or you run into environment issues, refer to the official install guide: https://playwright.dev/docs/intro
 
 ## Environment Setup
 1. Clone or pull this repository.
+2. Make sure you are in the \schneiderElectric Folder to perform the below steps.
 2. Install dependencies:
 
     npm install
