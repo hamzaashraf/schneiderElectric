@@ -5,6 +5,7 @@ test.describe('TensorFlow Schneider run', () => {
   test('record test loss with four features enabled x1,x2,xsquare,x2square', async ({ page }) => {
     const tensorflow = new TensorPage(page);
     await tensorflow.goto();
+    await expect(tensorflow.startStopButton).toBeVisible();
 
     // Baseline loss on initial load, before any configuration changes.
     const initialTestLossValue = await tensorflow.getTestLoss();
