@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-export const DATA_TITLE = 'Exclusive or'; // Title of the dataset used can be updated to test different datasets.
+export const DataTitle = 'Exclusive or'; // Title of the dataset used can be updated to test different datasets.
 export type FeatureName = 'xSquared' | 'ySquared';
 
 export class TensorPage {
@@ -42,11 +42,11 @@ export class TensorPage {
 
     // Method to select a dataset by clicking on the dataset title.
     async selectDataset() {
-        await this.page.getByTitle(DATA_TITLE).click();
+        await this.page.getByTitle(DataTitle).click();
     }
 
     async verifySelectedDataset(): Promise<boolean> {
-        const classAttr = await this.page.getByTitle(DATA_TITLE).locator('canvas').getAttribute('class');
+        const classAttr = await this.page.getByTitle(DataTitle).locator('canvas').getAttribute('class');
         return (classAttr ?? '').includes('selected');
     }
 
