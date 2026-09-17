@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-const DATA_TITLE = 'Exclusive or'; // Title of the dataset used can be updated to test different datasets.
+export const DATA_TITLE = 'Exclusive or'; // Title of the dataset used can be updated to test different datasets.
 export type FeatureName = 'xSquared' | 'ySquared';
 
 export class TensorPage {
@@ -53,12 +53,6 @@ export class TensorPage {
     // Method to set the noise level by filling the slider input.
     async setNoiseLevel(percent: number) {
         await this.noiseSlider.fill(String(percent));
-    }
-
-    // Method to get the current noise level from the slider input.
-    async getNoiseLevel(): Promise<number> {
-        const value = await this.noiseSlider.inputValue();
-        return Number(value);
     }
 
     // Feature toggling methods
