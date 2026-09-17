@@ -3,7 +3,7 @@ Automated Playwright tests for TensorFlow Playground (https://playground.tensorf
 
 ## Prerequisites
 
-- [Node.js] (https://nodejs.org/). (LTS version)
+- Node.js (https://nodejs.org/). (LTS version)
 - npm (comes with Node.js).
 - I used Visual Studio (VS Code) for this assignment.
 

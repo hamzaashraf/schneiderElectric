@@ -26,10 +26,8 @@ test.describe('TensorFlow Schneider run', () => {
     // Set the noise level and verify the selection.
     await tensorflow.toggleFeature('xSquared');
     await tensorflow.toggleFeature('ySquared');
-    //expect(await tensorflow.getFeatureState('xSquared')).toBe(true);
-    //expect(await tensorflow.getFeatureState('ySquared')).toBe(true);
-    await expect.poll(() => tensorflow.getFeatureState('xSquared')).toBe(true);
-    await expect.poll(() => tensorflow.getFeatureState('ySquared')).toBe(true);
+    await expect.poll(() => tensorflow.getFeatureState('xSquared')).toBe(true); // Verify that the xSquared feature is active
+    await expect.poll(() => tensorflow.getFeatureState('ySquared')).toBe(true); // Verify that the ySquared feature is active
 
     // Set the number of neurons in the first and second layers and verify the counts.
     await tensorflow.setNeuronCount(0); // Set first index layer to 3 neurons
