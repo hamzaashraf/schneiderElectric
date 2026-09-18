@@ -76,6 +76,12 @@ export class TensorPage {
         return (classAttr ?? '').split(/\s+/).includes('active');
     }
 
+    // Method to get the number of neurons for pre and post assertions
+    async getNeuronCount(layerIndex: number): Promise<number> {
+        const countText = await this.neuronControls.nth(layerIndex).locator('div').nth(1).textContent();
+        return parseInt(countText ?? '0', 10);
+    }
+
     // Method to set the number of neurons by clicking the remove button.
     async setNeuronCount(layerIndex: number) {
         const layer = this.neuronControls.nth(layerIndex);
